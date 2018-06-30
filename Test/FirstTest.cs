@@ -3,12 +3,13 @@ using NUnit.Framework;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using dotnet_selenium_sandbox.Pages.Example;
 
-namespace Test.firstTest
+namespace Test.FirstTest
 {
 
     [TestFixture]
-    public class Tests : dotnet_selenium_sandbox.Test.Base.testbase
+    public class Tests : dotnet_selenium_sandbox.Test.Base.TestBase
     {
 
         [Test]
@@ -18,13 +19,9 @@ namespace Test.firstTest
             
             Console.WriteLine(driver.Title);
             
-            IWebElement query = driver.FindElement(By.Name("q"));
+            GoogleLandingPage google = new GoogleLandingPage(driver);
+            google.queryGoogle("Page Objects In C#");
             
-            query.SendKeys("Docker Selenium");
-            query.Submit();
-            Console.WriteLine(driver.Title);
-
-            driver.Quit();
         }
     }
 }
