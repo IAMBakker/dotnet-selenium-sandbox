@@ -8,15 +8,23 @@ namespace dotnet_selenium_sandbox.Test.Base
 {
     public class TestBase
     {
-        protected IWebDriver driver;
-        
+        protected RemoteWebDriver driver;
+        protected RemoteLogs logs;
+
         [SetUp]
         public void SetUp(){
-            driver = new RemoteWebDriver(new Uri("http://127.0.0.1:4444/wd/hub"), new ChromeOptions());
+            ChromeOptions options = new ChromeOptions();
+            options.SetLoggingPreference(LogType.Browser, LogLevel.All);
+            driver = new RemoteWebDriver(options);
+            driver.Manage().Window.Maximize();
         }
 
         [TearDown]
         public void TearDown(){
+            var logs = driver.Manage().Logs.GetLog(LogType.Client);
+            foreach(var log in logs){
+                Console.Write(log);
+            }
             driver.Quit();
         }
     }
